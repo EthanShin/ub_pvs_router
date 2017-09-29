@@ -23,7 +23,7 @@ void fwi_parser(char *message,struct s_firmware_info* s_fwi)
 
 void make_device_info(struct s_device_status_info *s_dsi,char *data)
 {	
-	sprintf(data,"op_mode:%d,model_name:%s,fw_ver:%s,config_ver:%d,state:%d,dev_mac:%s,wan_ip:%s,uptime:%s,free_mem:%s,booting_num:%d",s_dsi->op_mode,s_dsi->model_name,s_dsi->fw_ver,s_dsi->config_ver,s_dsi->state,s_dsi->dev_mac,s_dsi->wan_ip,s_dsi->uptime,s_dsi->free_mem,s_dsi->booting_num);
+	sprintf(data,"{\"op_mode\":\"%d\",\"model_name\":\"%s\",\"fw_ver\":\"%s\",\"config_ver\":\"%d\",\"state\":\"%d\",\"dev_mac\":\"%s\",\"wan_ip\":\"%s\",\"uptime\":\"%s\",\"free_mem\":\"%s\",\"booting_num\":\"%d\"}",s_dsi->op_mode,s_dsi->model_name,s_dsi->fw_ver,s_dsi->config_ver,s_dsi->state,s_dsi->dev_mac,s_dsi->wan_ip,s_dsi->uptime,s_dsi->free_mem,s_dsi->booting_num);
 	printf("data [%s]\n",data);
 }
 
