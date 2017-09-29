@@ -104,7 +104,7 @@ void ping_test() {
             	sprintf(cmd, "ping -c1 -w1 %s", ip_array[i]);
         	    if(system(cmd)) {
     	            printf("fail\n");
-					sprintf(str_payload, "dead_device:%s", mac_array[i]);
+					sprintf(str_payload, "{\"dead_device\":\"%s\"}", mac_array[i]);
 					sprintf(mosq_cmd, "mosquitto_pub -h www.baruntechpvs.com -t PVS/device/ping/%s -m %s", mac_address, str_payload);
 				    system(mosq_cmd);
 
@@ -124,18 +124,19 @@ void ping_test() {
         }
 	}
 	
-	sprintf(str_payload, "");
+	sprintf(str_payload, "{");
 	int first_item = 0;
 	for(i = 0; i < 5; i++) {
 		if(strcmp(mac_array[i], "")) {
 			if(first_item == 0 ) {
-				sprintf(str_payload, "%d:%s", i, mac_array[i]);
+				sprintf(str_payload, "%s\"%d\":\"%s\"", str_payload, i, mac_array[i]);
 				first_item = 1;
 			} else {
-				sprintf(str_payload, "%s,%d:%s", str_payload, i, mac_array[i]);
+				sprintf(str_payload, "%s,\"%d\":\"%s\"", str_payload, i, mac_array[i]);
 			}
 		}
 	}
+	sprintf(str_payload, "%s}", str_payload);
 	sprintf(mosq_cmd, "mosquitto_pub -h www.baruntechpvs.com -t PVS/device/set/%s -m %s", mac_address, str_payload);
 	system(mosq_cmd);
 }
